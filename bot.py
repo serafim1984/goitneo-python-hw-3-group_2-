@@ -1,4 +1,7 @@
-contacts = {}
+import address_book_manager
+from collections import UserDict
+
+contacts = address_book_manager.AddressBook()
 
 def input_error(func):
     def inner(*args, **kwargs):
@@ -25,28 +28,46 @@ def parse_input(user_input):
 @input_error
 def add_contact(args, contacts):
     name, phone = args
-    contacts[name] = phone
+    #contacts[name] = name
+    new_record = address_book_manager.Record(name)
+    new_record.add_phone(phone)
+    contacts.add_record(new_record)
     return "Contact added."
 
 @input_error
+def add_birthday(args, contacts):
+    name, birthday = args
+    #contacts[name] = name
+    contacts.find_record(name).add_birthday(birthday)
+    return "Birthday added."
+
+@input_error
 def change_contact(args, contacts):
-    name, phone = args
-    contacts[name] = phone
+    name, phone_1, phone_2 = args
+    #contacts[name] = name
+    
+    contacts.find_record(name).edit_phone(phone_1, phone_2)
+
     return "Contact changed."
 
 @input_error
 def phone_contact(args, contacts):
-    name = args[0]
-    contact_phone = contacts[name]
-    return contact_phone
+    name = args
+    #contact_phone = contacts[name]
+    contacts.find_record(name).find_phone_name()
 
 @input_error
 def all_contact():
-    global contacts
+
+    for name, record  in contacts.data.items():
+        print(record)
+
+    '''global contacts
     all_contacts = ""
     for name, phone in contacts.items():
         all_contacts = all_contacts + name + " " + phone + "\n"
-    return all_contacts[:-1]
+    return all_contacts[:-1]'''
+
 
 
 def main():
@@ -69,6 +90,8 @@ def main():
             print(phone_contact(args, contacts))
         elif command == "all":
             print(all_contact())
+        elif command == "add-birthday":
+            print(add_birthday(args, contacts))
         else:
             print("Invalid command.")
 

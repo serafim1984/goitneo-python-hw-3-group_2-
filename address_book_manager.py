@@ -74,12 +74,20 @@ class Record:
         for ph in self.phones:
             if str(ph) == phone:
                 self.phones[self.phones.index(ph)] = Phone(new_phone)
+            return self
     
     def find_phone(self, phone): 
         for ph in self.phones:
             if str(ph) == phone:
                 found_phone = phone
         return found_phone
+    
+    def find_phone_name(self):
+        for phone in self.phones:
+            print(phone)
+
+    def show_birthday(self):
+        print(str(self.birthday))
     
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}, birthday: {self.birthday}"
@@ -89,10 +97,10 @@ class AddressBook(UserDict):
     def add_record(self, record):
         self.update({record.name : record})
 
-    def find(self, name):
+    def find_record(self, name):
         for name_dict, record in self.data.items():
             if str(name_dict) == name:
-                return record
+                return Record(record)
 
     def delete(self, name):
         for name_dict, record in self.data.items():
@@ -109,7 +117,7 @@ class AddressBook(UserDict):
         return get_birthdays_per_week.get_birthdays_per_week(colleagues_list)
 
 
-        
+'''        
 # реалізація класу
 # Створення нової адресної книги
 book = AddressBook()
@@ -165,4 +173,4 @@ for name, record in book.data.items():
 roman_record.add_birthday("15.06.1984")
 
 book.get_birthdays()
-
+'''
