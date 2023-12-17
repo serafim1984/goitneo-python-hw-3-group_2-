@@ -87,7 +87,7 @@ class Record:
             print(phone)
 
     def show_birthday(self):
-        print(str(self.birthday))
+        return str(self.birthday)
     
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}, birthday: {self.birthday}"
@@ -100,7 +100,7 @@ class AddressBook(UserDict):
     def find_record(self, name):
         for name_dict, record in self.data.items():
             if str(name_dict) == name:
-                return Record(record)
+                return record
 
     def delete(self, name):
         for name_dict, record in self.data.items():
@@ -112,65 +112,6 @@ class AddressBook(UserDict):
         
         colleagues_list = self.values()
 
-        print(colleagues_list)
+        #print(colleagues_list)
         
         return get_birthdays_per_week.get_birthdays_per_week(colleagues_list)
-
-
-'''        
-# реалізація класу
-# Створення нової адресної книги
-book = AddressBook()
-
-john_record = Record("John")
-john_record.add_phone("1234567890")
-john_record.add_phone("5555555555")
-
-# Додавання запису John до адресної книги
-book.add_record(john_record)
-
-# Створення та додавання нового запису для Jane
-jane_record = Record("Jane")
-jane_record.add_phone("9876543210")
-book.add_record(jane_record)
-
-# Виведення всіх записів у книзі
-for name, record in book.data.items():
-    print(record)
-
-# Знаходження та редагування телефону для John
-john = book.find("John")
-
-print(john)
-
-john.edit_phone("1234567890", "1112223333")
-
-print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
-
-# Пошук конкретного телефону у записі John
-found_phone = john.find_phone("5555555555")
-print(f"{john.name}: {found_phone}")  # Виведення: 5555555555
-
-# Видалення запису Jane
-book.delete("Jane")
-
-# Виведення всіх записів у книзі (перевірка видалення)
-for name, record in book.data.items():
-    print(record)
-
-john_record.add_birthday("18.12.2001")
-
-for name, record in book.data.items():
-    print(record)
-
-roman_record = Record("Roman")
-roman_record.add_phone("0501614466")
-book.add_record(roman_record)
-
-for name, record in book.data.items():
-    print(record)
-
-roman_record.add_birthday("15.06.1984")
-
-book.get_birthdays()
-'''

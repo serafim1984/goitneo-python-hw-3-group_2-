@@ -48,12 +48,3 @@ def get_birthdays_per_week(colleagues_list):
 
     return print(string_full[:-1])
 
-
-'''get_birthdays_per_week([{"name": "Bill Gates", "birthday": '05.02.1955'}, 
-                         {"name": "Elon Musk", "birthday": '06.12.1966'}, 
-                         {"name": "Madonna", "birthday": '05.12.1970'}, 
-                         {"name": "Bill Murrey", "birthday": '23.12.1970'}, 
-                         {"name": "Jeff Frisker", "birthday": '02.12.1970'}, 
-                         {"name": "Elen Glister", "birthday": '20.11.1970'}, 
-                         {"name": "Viven Pfafer", "birthday": '18.12.1970'}
-                        ])'''

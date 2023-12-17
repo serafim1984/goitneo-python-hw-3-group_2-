@@ -10,9 +10,12 @@ def input_error(func):
         except (ValueError, KeyError, IndexError):
             return """Please give me correct input\n
                       To add contact >>> 'add' <name> <phone number>\n
-                      To change contact >>> 'change' <name> <phone number>\n
+                      To change contact >>> 'change' <name> <phone number old> <phone number new>\n
                       To see a phone number of a contact >>> 'phone' <name>\n
                       To see all contacts >>> 'all'\n
+                      To add birthday to contact >>> 'add' <name> <birthday date in forman DD.MM.YYYY>\n
+                      To show all birthdays in next week >>> 'birthdays'\n
+                      To show birthday of a person >>> 'show-birthday' <name>\n
                       To close me >>> 'close' or 'exit'\n
                       """
 
@@ -28,7 +31,6 @@ def parse_input(user_input):
 @input_error
 def add_contact(args, contacts):
     name, phone = args
-    #contacts[name] = name
     new_record = address_book_manager.Record(name)
     new_record.add_phone(phone)
     contacts.add_record(new_record)
@@ -37,14 +39,22 @@ def add_contact(args, contacts):
 @input_error
 def add_birthday(args, contacts):
     name, birthday = args
-    #contacts[name] = name
     contacts.find_record(name).add_birthday(birthday)
     return "Birthday added."
 
 @input_error
+def show_birthday(args, contacts):
+    name = args
+    return contacts.find_record(name).birthday()
+
+@input_error
+def birthdays():
+    contacts.get_birthdays()
+
+@input_error
 def change_contact(args, contacts):
     name, phone_1, phone_2 = args
-    #contacts[name] = name
+ 
     
     contacts.find_record(name).edit_phone(phone_1, phone_2)
 
@@ -53,7 +63,6 @@ def change_contact(args, contacts):
 @input_error
 def phone_contact(args, contacts):
     name = args
-    #contact_phone = contacts[name]
     contacts.find_record(name).find_phone_name()
 
 @input_error
@@ -61,12 +70,6 @@ def all_contact():
 
     for name, record  in contacts.data.items():
         print(record)
-
-    '''global contacts
-    all_contacts = ""
-    for name, phone in contacts.items():
-        all_contacts = all_contacts + name + " " + phone + "\n"
-    return all_contacts[:-1]'''
 
 
 
@@ -92,6 +95,10 @@ def main():
             print(all_contact())
         elif command == "add-birthday":
             print(add_birthday(args, contacts))
+        elif command == "show-birthday":
+            print(show_birthday(args, contacts))
+        elif command == "birthdays":
+            birthdays()
         else:
             print("Invalid command.")
 
